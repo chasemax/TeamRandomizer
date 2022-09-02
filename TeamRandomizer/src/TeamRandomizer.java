@@ -58,9 +58,27 @@ public class TeamRandomizer {
 	 * name per line.
 	 * @param fileName - the name of the file that contains the students' names.
 	 * @return An ArrayList containing each student's name.
+	 * @throws FileNotFoundException 
 	 */
-	public static ArrayList<String> getNamesFromFile(String fileName) {
-		return new ArrayList<String>();
+	public static ArrayList<String> getNamesFromFile(String fileName) throws FileNotFoundException {
+		
+		// Generate empty array
+		ArrayList<String> names = new ArrayList<String>();
+		
+		// Instantiate file and scanner
+		File file = new File(fileName);
+		Scanner scan = new Scanner(file);
+		
+		// Loop lines to construct array
+		while(scan.hasNextLine()) {
+			names.add(scan.nextLine());
+		}
+		
+		// Close scanner
+		scan.close();
+		
+		// Return names list
+		return names;
 	}
 	
 	/**
