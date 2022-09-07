@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class TeamRandomizer {
@@ -41,12 +42,18 @@ public class TeamRandomizer {
 		try {
 			studentNames = getNamesFromFile(nameListFile);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
 		}
 		// Then, we assign all the teams
-		ArrayList<ArrayList<String>> teams = getNewTeams(studentNames, numOfTeams);
+		ArrayList<ArrayList<String>> teams;
+		try {
+			teams = getNewTeams(studentNames, numOfTeams);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
 		// Finally, we print out the teams
 		printNames(teams);
 		
@@ -100,9 +107,38 @@ public class TeamRandomizer {
 	 * @param numOfTeams - the number of teams desired
 	 * @return An ArrayList of ArrayLists of strings, where the inner ArrayLists contain all the
 	 * team members' names.
+	 * @throws Exception if numOfTeams is 0
 	 */
-	public static ArrayList<ArrayList<String>> getNewTeams(ArrayList<String> allNames, int numOfTeams) {
-		return new ArrayList<ArrayList<String>>();
+	public static ArrayList<ArrayList<String>> getNewTeams(ArrayList<String> allNames, int numOfTeams) throws Exception {
+		//return new ArrayList<ArrayList<String>>();
+		
+		if (numOfTeams == 0) {
+			throw new Exception("Number of teams cannot be 0");
+		}
+		
+		//Create a team size variable to determine how large each team should be @DEV this should also handle remainders
+		// team size truncates remainder
+//		int teamSize = allNames.size() / numOfTeams;
+		
+		
+		//Shuffle the list of names
+		Collections.shuffle(allNames);
+		
+		// Create master list
+		ArrayList<ArrayList<String>> teamsList = new ArrayList<ArrayList<String>>(numOfTeams);
+		
+		// Loop and add arrays
+		for (int i = 0; i < numOfTeams; i++) {
+			teamsList.add(new ArrayList<String>());
+		}
+		
+		// Loop through all names and modulo size index to get group index
+		for (int i = 0; i < allNames.size(); i++) {
+			teamsList.get( i % numOfTeams).add(allNames.get(i));
+		}
+		
+		// return list of teams
+		return teamsList;
 	}
 	
 	/**
@@ -111,7 +147,16 @@ public class TeamRandomizer {
 	 * all the team members' names.
 	 */
 	public static void printNames(ArrayList<ArrayList<String>> allTeams) {
-		System.out.println("Print the teams out here");
+		System.out.println("Here are your randomized teams:");
+        //iterates through the teams and prints them out
+		for (int i=0; i < allTeams.size(); i++)
+		{				
+			System.out.print("\nTeam " + (i + 1) + "\n");
+			for (int j=0; j < allTeams.get(i).size(); j++) 
+			{
+				System.out.print(allTeams.get(i).get(j) + ", ");
+			}
+		}
 	}
 	
 	// Testing for git here
