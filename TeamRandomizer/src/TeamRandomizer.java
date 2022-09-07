@@ -1,4 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TeamRandomizer {
 
@@ -34,7 +37,14 @@ public class TeamRandomizer {
 		System.out.println("You've chosen to generate " + numOfTeams + " teams from the file: " + nameListFile);
 		
 		// First, we get all the names from the file provided
-		ArrayList<String> studentNames = getNamesFromFile(nameListFile);
+		ArrayList<String> studentNames;
+		try {
+			studentNames = getNamesFromFile(nameListFile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
 		// Then, we assign all the teams
 		ArrayList<ArrayList<String>> teams = getNewTeams(studentNames, numOfTeams);
 		// Finally, we print out the teams
