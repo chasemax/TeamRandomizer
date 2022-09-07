@@ -50,7 +50,6 @@ public class TeamRandomizer {
 		try {
 			teams = getNewTeams(studentNames, numOfTeams);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
 		}
@@ -110,17 +109,12 @@ public class TeamRandomizer {
 	 * @throws Exception if numOfTeams is 0
 	 */
 	public static ArrayList<ArrayList<String>> getNewTeams(ArrayList<String> allNames, int numOfTeams) throws Exception {
-		//return new ArrayList<ArrayList<String>>();
-		
+
+		// Case handling for if the number of teams provided is 0
 		if (numOfTeams == 0) {
 			throw new Exception("Number of teams cannot be 0");
 		}
-		
-		//Create a team size variable to determine how large each team should be @DEV this should also handle remainders
-		// team size truncates remainder
-//		int teamSize = allNames.size() / numOfTeams;
-		
-		
+
 		//Shuffle the list of names
 		Collections.shuffle(allNames);
 		
@@ -158,7 +152,4 @@ public class TeamRandomizer {
 			}
 		}
 	}
-	
-	// Testing for git here
-
 }
